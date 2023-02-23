@@ -3,10 +3,13 @@ package com.sniklz.pizzaservice.service.impl;
 import com.sniklz.pizzaservice.model.Ingredient;
 import com.sniklz.pizzaservice.repository.IngredientRepository;
 import com.sniklz.pizzaservice.service.DefaultService;
+import com.sniklz.pizzaservice.service.IngredientService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
-public class IngredientServiceImpl implements DefaultService<Ingredient> {
+public class IngredientServiceImpl implements IngredientService {
 
     private final IngredientRepository repository;
 
@@ -28,6 +31,15 @@ public class IngredientServiceImpl implements DefaultService<Ingredient> {
     public Ingredient update(Long id, Ingredient model) {
         Ingredient ingredient = repository.getReferenceById(id);
         ingredient.setName(model.getName());
+        ingredient.setCost(model.getCost());
+        save(ingredient);
+        return ingredient;
+    }
+
+    @Override
+    public Ingredient updateCost(Long id, BigDecimal cost) {
+        Ingredient ingredient = get(id);
+        ingredient.setCost(cost);
         save(ingredient);
         return ingredient;
     }

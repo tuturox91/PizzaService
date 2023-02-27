@@ -22,6 +22,7 @@ public class IngredientServiceImpl implements IngredientService {
         return repository.save(model);
     }
 
+
     @Override
     public Ingredient get(Long id) {
         return repository.getReferenceById(id);

@@ -10,5 +10,9 @@ import java.util.Map;
 public interface PizzaService extends DefaultService<Pizza> {
     Pizza calculatePizzaCost(Long id);
 
+    Pizza saveWithCost(Pizza model);
+
     List<Pizza> findAll(Map<String, String> params);
+
+
 }

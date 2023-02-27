@@ -36,7 +36,7 @@ public class PizzaController {
 
     @PostMapping
     public PizzaResponseDto addPizza(@RequestBody PizzaRequestDto requestDto) {
-        return mapper.toDto(pizzaservice.save(mapper.toModel(requestDto)));
+        return mapper.toDto(pizzaservice.saveWithCost(mapper.toModel(requestDto)));
     }
 
     @GetMapping("{id}")

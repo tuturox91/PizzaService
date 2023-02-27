@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class PizzaServiceImpl implements PizzaService {
@@ -35,6 +36,13 @@ public class PizzaServiceImpl implements PizzaService {
     }
 
     @Override
+    public Pizza saveWithCost(Pizza model) {
+        BigDecimal resultCost =  calculateCost(model.getIngredients());
+        model.setResultCost(resultCost);
+        return repository.save(model);
+    }
+
+    @Override
     public Pizza get(Long id) {
         return repository.getReferenceById(id);
     }
@@ -53,14 +61,20 @@ public class PizzaServiceImpl implements PizzaService {
     @Override
     public Pizza calculatePizzaCost(Long id) {
         Pizza pizza = get(id);
-        BigDecimal result = pizza.getIngredients()
-                .stream()
-                .map(Ingredient::getCost)
-                .reduce(BigDecimal.ZERO, (x, y) -> x.add(y));
+        BigDecimal result = calculateCost(pizza.getIngredients());
         pizza.setResultCost(result);
         save(pizza);
         return pizza;
     }
+
+    private BigDecimal calculateCost(Set<Ingredient> ingredientSet) {
+        BigDecimal result = ingredientSet
+                .stream()
+                .map(Ingredient::getCost)
+                .reduce(BigDecimal.ZERO, (x, y) -> x.add(y));
+        return result;
+    }
+
 
     @Override
     public List<Pizza> findAll(Map<String, String> params) {

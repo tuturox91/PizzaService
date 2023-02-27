@@ -52,10 +52,4 @@ public class PizzaIngredient {
     public PizzaResponseDto calculatePizzaCost(@PathVariable Long id) {
         return mapper.toDto(pizzaservice.calculatePizzaCost(id));
     }
-
-    @GetMapping("/get/byIngredient")
-    public List<PizzaResponseDto> getPizzasByIngredient(@RequestParam List<Long> ingredientsId) {
-        List<Pizza> allPizzasByIngredients = pizzaservice.getAllPizzasByIngredients(ingredientsId);
-        return allPizzasByIngredients.stream().map(mapper::toDto).toList();
-    }
 }

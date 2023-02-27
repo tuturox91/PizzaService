@@ -55,11 +55,4 @@ public class PizzaServiceImpl implements PizzaService {
         save(pizza);
         return pizza;
     }
-
-    @Override
-    public List<Pizza> getAllPizzasByIngredients(List<Long> ingredientsId) {
-        List<Ingredient> ingredients = ingredientsId.stream().map(ingredientService::get).toList();
-        //return repository.findPizzaByIngredientsContaining(ingredients);
-        return null;
-    }
 }

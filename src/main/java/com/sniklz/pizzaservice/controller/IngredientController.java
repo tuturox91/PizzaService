@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 @RequestMapping("/ingredient")
 public class IngredientController {
 
-
     private final UniversalDtoMapper<IngredientRequestDto, IngredientResponseDto, Ingredient> mapper;
 
     private final IngredientService ingredientService;

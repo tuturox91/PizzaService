@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface PizzaService extends DefaultService<Pizza> {
     Pizza calculatePizzaCost(Long id);
-
-    List<Pizza> getAllPizzasByIngredients(List<Long> ingredientsId);
 }

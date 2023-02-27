@@ -10,6 +10,8 @@ import com.sniklz.pizzaservice.service.impl.PizzaServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class PizzaMapper implements UniversalDtoMapper<PizzaRequestDto, PizzaResponseDto, Pizza> {
@@ -28,8 +30,8 @@ public class PizzaMapper implements UniversalDtoMapper<PizzaRequestDto, PizzaRes
         pizza.setName(requestDto.getName());
         pizza.setDescription(requestDto.getDescription());
         pizza.setResultCost(requestDto.getResultCost());
-        List<Ingredient> ingredients = requestDto.getIngredients()
-                .stream().map(ingredientService::get).toList();
+        Set<Ingredient> ingredients = requestDto.getIngredients()
+                .stream().map(ingredientService::get).collect(Collectors.toSet());
 
         pizza.setIngredients(ingredients);
         return pizza;

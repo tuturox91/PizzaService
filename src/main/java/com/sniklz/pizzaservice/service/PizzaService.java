@@ -1,9 +1,7 @@
 package com.sniklz.pizzaservice.service;
 
-import com.sniklz.pizzaservice.model.Ingredient;
 import com.sniklz.pizzaservice.model.Pizza;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 

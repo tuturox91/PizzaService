@@ -2,7 +2,6 @@ package com.sniklz.pizzaservice.service.impl;
 
 import com.sniklz.pizzaservice.model.Ingredient;
 import com.sniklz.pizzaservice.repository.IngredientRepository;
-import com.sniklz.pizzaservice.service.DefaultService;
 import com.sniklz.pizzaservice.service.IngredientService;
 import org.springframework.stereotype.Service;
 

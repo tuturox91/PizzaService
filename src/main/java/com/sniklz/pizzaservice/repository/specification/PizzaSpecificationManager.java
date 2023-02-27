@@ -4,7 +4,6 @@ import com.sniklz.pizzaservice.model.Pizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -20,7 +19,6 @@ public class PizzaSpecificationManager implements SpecificationManager<Pizza> {
         this.providerMap = pizzaSpecifications.stream()
                 .collect(Collectors.toMap(SpecificationProvider::getFilterKey, Function.identity()));
     }
-
 
     @Override
     public Specification<Pizza> get(String filterKey, String[] params) {

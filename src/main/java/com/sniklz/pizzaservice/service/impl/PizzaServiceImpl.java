@@ -3,14 +3,15 @@ package com.sniklz.pizzaservice.service.impl;
 import com.sniklz.pizzaservice.model.Ingredient;
 import com.sniklz.pizzaservice.model.Pizza;
 import com.sniklz.pizzaservice.repository.PizzaRepository;
+import com.sniklz.pizzaservice.repository.specification.PizzaSpecificationManager;
 import com.sniklz.pizzaservice.service.IngredientService;
 import com.sniklz.pizzaservice.service.PizzaService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 @Service
 public class PizzaServiceImpl implements PizzaService {
@@ -18,9 +19,14 @@ public class PizzaServiceImpl implements PizzaService {
     private final PizzaRepository repository;
     private final IngredientService ingredientService;
 
-    public PizzaServiceImpl(PizzaRepository repository, IngredientService ingredientService) {
+    private final PizzaSpecificationManager specificationManager;
+
+    public PizzaServiceImpl(PizzaRepository repository,
+                            IngredientService ingredientService,
+                            PizzaSpecificationManager specificationManager) {
         this.repository = repository;
         this.ingredientService = ingredientService;
+        this.specificationManager = specificationManager;
     }
 
     @Override
@@ -54,5 +60,16 @@ public class PizzaServiceImpl implements PizzaService {
         pizza.setResultCost(result);
         save(pizza);
         return pizza;
+    }
+
+    @Override
+    public List<Pizza> findAll(Map<String, String> params) {
+        Specification<Pizza> specification = null;
+        for(Map.Entry<String, String> entry: params.entrySet()) {
+            Specification<Pizza> sp = specificationManager.get(entry.getKey(),
+                    entry.getValue().split(","));
+            specification = specification == null ? Specification.where(sp) : specification.and(sp);
+        }
+        return repository.findAll(specification);
     }
 }

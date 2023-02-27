@@ -3,7 +3,6 @@ package com.sniklz.pizzaservice.controller;
 import com.sniklz.pizzaservice.dto.request.PizzaRequestDto;
 import com.sniklz.pizzaservice.dto.response.PizzaResponseDto;
 import com.sniklz.pizzaservice.model.Pizza;
-import com.sniklz.pizzaservice.service.DefaultService;
 import com.sniklz.pizzaservice.dto.mapper.UniversalDtoMapper;
 import com.sniklz.pizzaservice.service.PizzaService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/pizza")
-public class PizzaIngredient {
+public class PizzaController {
 
     private final UniversalDtoMapper<PizzaRequestDto, PizzaResponseDto, Pizza> mapper;
     private final PizzaService pizzaservice;
 
-    public PizzaIngredient(
+    public PizzaController(
             UniversalDtoMapper<PizzaRequestDto,
             PizzaResponseDto, Pizza> mapper,
             PizzaService pizzaservice) {
@@ -51,5 +52,12 @@ public class PizzaIngredient {
     @PostMapping("{id}/cost")
     public PizzaResponseDto calculatePizzaCost(@PathVariable Long id) {
         return mapper.toDto(pizzaservice.calculatePizzaCost(id));
+    }
+
+    @GetMapping
+    public List<PizzaResponseDto> findAll (@RequestParam Map<String, String> params) {
+        return pizzaservice.findAll(params).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 }

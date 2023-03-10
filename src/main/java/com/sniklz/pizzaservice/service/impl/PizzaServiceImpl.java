@@ -18,15 +18,12 @@ import java.util.Set;
 public class PizzaServiceImpl implements PizzaService {
 
     private final PizzaRepository repository;
-    private final IngredientService ingredientService;
 
     private final PizzaSpecificationManager specificationManager;
 
     public PizzaServiceImpl(PizzaRepository repository,
-                            IngredientService ingredientService,
                             PizzaSpecificationManager specificationManager) {
         this.repository = repository;
-        this.ingredientService = ingredientService;
         this.specificationManager = specificationManager;
     }
 
@@ -54,6 +51,7 @@ public class PizzaServiceImpl implements PizzaService {
         pizza.setDescription(model.getDescription());
         pizza.setResultCost(model.getResultCost());
         pizza.setIngredients(model.getIngredients());
+        pizza.setPizzaSize(model.getPizzaSize());
         save(pizza);
         return pizza;
     }
@@ -62,6 +60,9 @@ public class PizzaServiceImpl implements PizzaService {
     public Pizza calculatePizzaCost(Long id) {
         Pizza pizza = get(id);
         BigDecimal result = calculateCost(pizza.getIngredients());
+        if(pizza.getPizzaSize() == Pizza.PizzaType.LARGE) {
+            result.add(BigDecimal.valueOf(30));
+        }
         pizza.setResultCost(result);
         save(pizza);
         return pizza;

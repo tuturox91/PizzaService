@@ -2,6 +2,8 @@ package com.sniklz.pizzaservice.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,4 +33,20 @@ public class Pizza {
             joinColumns = @JoinColumn(name = "pizza_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private Set<Ingredient> ingredients;
+
+    @Enumerated (value = EnumType.STRING)
+    private PizzaType pizzaSize;
+
+    public enum PizzaType {
+        SMALL("small"),
+        LARGE("large");
+
+        private String name;
+
+        PizzaType(String value) {
+            name = value;
+        }
+
+    }
+
 }

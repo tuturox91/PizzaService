@@ -11,4 +11,5 @@ public class PizzaRequestDto {
     private String description;
     private List<Long> ingredients;
     private BigDecimal resultCost = BigDecimal.ZERO;
+    private String pizzaSize = "small";
 }

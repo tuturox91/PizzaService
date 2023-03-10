@@ -12,4 +12,5 @@ public class PizzaResponseDto {
     private String description;
     private List<Long> ingredients;
     private BigDecimal resultCost;
+    private String pizzaSize;
 }

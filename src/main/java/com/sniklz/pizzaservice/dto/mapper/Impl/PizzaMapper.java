@@ -33,6 +33,7 @@ public class PizzaMapper implements UniversalDtoMapper<PizzaRequestDto, PizzaRes
                 .stream().map(ingredientService::get).collect(Collectors.toSet());
 
         pizza.setIngredients(ingredients);
+        pizza.setPizzaSize(Pizza.PizzaType.valueOf(requestDto.getPizzaSize().toUpperCase()));
         return pizza;
     }
 
@@ -47,6 +48,7 @@ public class PizzaMapper implements UniversalDtoMapper<PizzaRequestDto, PizzaRes
                 .stream()
                 .map(Ingredient::getId)
                 .toList());
+        responseDto.setPizzaSize(model.getPizzaSize().toString());
         return responseDto;
     }
 }
